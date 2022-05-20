@@ -26,10 +26,13 @@ double checkTime(struct context *context) {
         password[i] = 'A';
       } else if (password[i] == 'Z') {
         password[i] = 'a';
+        i++;
+        continue;
       } else {
         password[i]++;
       }
-    } while (password[i++] == 'Z');
+      break;
+    } while (true);
   }
   free(password);
   clock_t timeTaken = clock() - start;
