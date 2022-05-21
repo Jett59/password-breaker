@@ -19,7 +19,7 @@ double checkTime(struct context *context) {
       break;
     }
     int i = 0;
-    do {
+    while (true) {
       if (password[i] == 0) {
         password[i] = 'a';
       } else if (password[i] == 'z') {
@@ -32,7 +32,7 @@ double checkTime(struct context *context) {
         password[i]++;
       }
       break;
-    } while (true);
+    }
   }
   free(password);
   clock_t timeTaken = clock() - start;
@@ -41,6 +41,7 @@ double checkTime(struct context *context) {
 
 struct context {
   const char *str;
+  int length;
 };
 
 int main(int argc, char **argv) {
@@ -52,11 +53,12 @@ int main(int argc, char **argv) {
   }
   struct context context;
   context.str = argv[1];
+  context.length = strlen(context.str);
   double timeTaken = checkTime(&context);
   printf("It took %.3fs\n", timeTaken);
   return 0;
 }
 
 bool check(const char *password, struct context *context) {
-  return strcmp(password, context->str) == 0;
+  return memcmp(password, context->str, context->length) == 0;
 }
